@@ -1,0 +1,6 @@
+jdbc:sqlserver://
+localhost
+1433
+SQLKutuphane
+sa
+123456
