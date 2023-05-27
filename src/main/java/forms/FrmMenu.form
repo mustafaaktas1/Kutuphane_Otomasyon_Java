@@ -20,34 +20,34 @@
             <Property name="text" type="java.lang.String" value="Kitap &#x130;&#x15f;lemleri"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemKitapAlisVeris">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Kitap Al&#x131;&#x15f;-Veri&#x15f;"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem4">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemKitapIslemleri">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Kitap &#x130;&#x15f;lemleri"/>
               </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
+        <Menu class="javax.swing.JMenu" name="jMenuUyeIslmeleri">
           <Properties>
             <Property name="text" type="java.lang.String" value="&#xdc;ye &#x130;&#x15f;lemleri"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu3">
+        <Menu class="javax.swing.JMenu" name="jMenuKategoriIslemleri">
           <Properties>
             <Property name="text" type="java.lang.String" value="Kategori &#x130;&#x15f;lemleri"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu4">
+        <Menu class="javax.swing.JMenu" name="jMenuListe">
           <Properties>
             <Property name="text" type="java.lang.String" value="Listeler"/>
           </Properties>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu6">
+        <Menu class="javax.swing.JMenu" name="jMenuAbout">
           <Properties>
             <Property name="text" type="java.lang.String" value="Hakk&#x131;m&#x131;zda"/>
           </Properties>
@@ -57,12 +57,12 @@
             <Property name="text" type="java.lang.String" value="Ayarlar"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItemDarkMode">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Karanl&#x131;k Mod"/>
               </Properties>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemCikis">
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#xc7;&#x131;k&#x131;&#x15f;"/>
               </Properties>
@@ -74,7 +74,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Ana Men&#xfc;"/>
+    <Property name="title" type="java.lang.String" value="K&#xfc;t&#xfc;phane Takip Otomasyonu"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBar1"/>
@@ -108,31 +108,31 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="83" pref="83" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="220" max="-2" attributes="0"/>
+                      <Component id="jButtonKitapAlisVeris" min="-2" pref="220" max="-2" attributes="0"/>
                       <EmptySpace min="49" pref="49" max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" pref="219" max="-2" attributes="0"/>
+                      <Component id="jButtonKitapIslemleri" min="-2" pref="219" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="83" pref="83" max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" pref="220" max="-2" attributes="0"/>
+                      <Component id="jButtonUyeIslemleri" min="-2" pref="220" max="-2" attributes="0"/>
                       <EmptySpace min="49" pref="49" max="-2" attributes="0"/>
-                      <Component id="jButton4" min="-2" pref="219" max="-2" attributes="0"/>
+                      <Component id="jButtonKategoriIslemleri" min="-2" pref="219" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="83" pref="83" max="-2" attributes="0"/>
-                      <Component id="jButton5" min="-2" pref="220" max="-2" attributes="0"/>
+                      <Component id="jButtonListe" min="-2" pref="220" max="-2" attributes="0"/>
                       <EmptySpace min="49" pref="49" max="-2" attributes="0"/>
-                      <Component id="jButton6" min="-2" pref="219" max="-2" attributes="0"/>
+                      <Component id="jButtonCikis" min="-2" pref="219" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Component id="jLabelTopKitap" min="-2" pref="14" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabelTopKitap" min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
-                      <Component id="jLabelTopUye" min="-2" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabelTopUye" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="97" max="32767" attributes="0"/>
@@ -148,27 +148,24 @@
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="55" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton1" min="-2" pref="66" max="-2" attributes="0"/>
-                  <Component id="jButton2" min="-2" pref="66" max="-2" attributes="0"/>
+                  <Component id="jButtonKitapAlisVeris" min="-2" pref="66" max="-2" attributes="0"/>
+                  <Component id="jButtonKitapIslemleri" min="-2" pref="66" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="52" pref="52" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton3" min="-2" pref="68" max="-2" attributes="0"/>
-                  <Component id="jButton4" min="-2" pref="68" max="-2" attributes="0"/>
+                  <Component id="jButtonUyeIslemleri" min="-2" pref="68" max="-2" attributes="0"/>
+                  <Component id="jButtonKategoriIslemleri" min="-2" pref="68" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="55" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton5" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="jButton6" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jButtonListe" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jButtonCikis" min="-2" pref="65" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Component id="jLabelTopUye" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelTopUye" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -200,52 +197,52 @@
         <Property name="text" type="java.lang.String" value="L&#xfc;tfen &#x130;&#x15f;leminizi Se&#xe7;iniz!"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButtonKitapAlisVeris">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kitap Al&#x131;&#x15f;-Veri&#x15f;"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonKitapAlisVerisActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="jButtonKitapIslemleri">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kitap &#x130;&#x15f;lemleri"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonKitapIslemleriActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="jButtonUyeIslemleri">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xdc;ye &#x130;&#x15f;lemleri"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonUyeIslemleriActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="jButtonKategoriIslemleri">
       <Properties>
         <Property name="text" type="java.lang.String" value="Kategori &#x130;&#x15f;lemleri"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonKategoriIslemleriActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="jButtonListe">
       <Properties>
         <Property name="text" type="java.lang.String" value="Listeler"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonListeActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="jButtonCikis">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#xc7;&#x131;k&#x131;&#x15f; Yap"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCikisActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -275,7 +272,7 @@
     <Component class="javax.swing.JLabel" name="jLabelTopUye">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Times New Roman" size="16" style="0"/>
+          <Font name="Segoe UI" size="16" style="0"/>
         </Property>
         <Property name="text" type="java.lang.String" value="0"/>
       </Properties>

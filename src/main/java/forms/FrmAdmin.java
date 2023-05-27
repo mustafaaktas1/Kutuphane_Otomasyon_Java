@@ -4,11 +4,37 @@
  */
 package forms;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
+import java.awt.EventQueue;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import utils.DBConnection;
+
 /**
  *
  * @author MustafaAktas
  */
 public class FrmAdmin extends javax.swing.JFrame {
+
+    Connection conn = new DBConnection().CreateConnection();
+    ResultSet rs = null;
+    CallableStatement proc = null;
+    PreparedStatement pst = null;
+    Statement st=null;
+    MessageDigest md;
 
     /**
      * Creates new form FrmAdmin
@@ -28,49 +54,64 @@ public class FrmAdmin extends javax.swing.JFrame {
 
         jMenu1 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jButtonEkle = new javax.swing.JButton();
+        jButtonGuncelle = new javax.swing.JButton();
+        jButtonSil = new javax.swing.JButton();
+        jButtonMenu = new javax.swing.JButton();
+        jComboBoxRol = new javax.swing.JComboBox<>();
+        jPasswordFieldSifre = new javax.swing.JPasswordField();
+        jTextFieldKullaniciAdi = new javax.swing.JTextField();
+        jTextFieldKullaniciAdiGetir = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jButtonGetir = new javax.swing.JButton();
+        jPasswordFieldSifreTekrar = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuAbout = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItemDarkMode = new javax.swing.JCheckBoxMenuItem();
+        jMenuItemCikis = new javax.swing.JMenuItem();
 
         jMenu1.setText("jMenu1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Kütüphane Takip Otomasyonu");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 30)); // NOI18N
         jLabel1.setText("Admin Paneli");
 
-        jButton2.setText("Ekle");
-
-        jButton3.setText("Güncelle");
-
-        jButton4.setText("Sil");
-
-        jButton5.setText("Ana Menü");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEkle.setText("Ekle");
+        jButtonEkle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonEkleActionPerformed(evt);
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
+        jButtonGuncelle.setText("Güncelle");
+        jButtonGuncelle.setEnabled(false);
+
+        jButtonSil.setText("Sil");
+        jButtonSil.setEnabled(false);
+
+        jButtonMenu.setText("Ana Menü");
+        jButtonMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMenuActionPerformed(evt);
+            }
+        });
+
+        jComboBoxRol.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jComboBoxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
+
+        jPasswordFieldSifre.setEchoChar('b');
 
         jLabel2.setText("Kullanıcı Adı");
 
@@ -80,21 +121,42 @@ public class FrmAdmin extends javax.swing.JFrame {
 
         jLabel5.setText("Şifreyi Tekrar Girin");
 
-        jButton6.setText("Getir");
+        jButtonGetir.setText("Getir");
+        jButtonGetir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGetirActionPerformed(evt);
+            }
+        });
+
+        jPasswordFieldSifreTekrar.setEchoChar('b');
 
         jLabel6.setText("Kullanıcı Rolü");
 
-        jMenu2.setText("Hakkımızda");
-        jMenuBar1.add(jMenu2);
+        jMenuAbout.setText("Hakkımızda");
+        jMenuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAboutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAbout);
 
         jMenu3.setText("Ayarlar");
 
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Karanlık Mod");
-        jMenu3.add(jCheckBoxMenuItem1);
+        jCheckBoxMenuItemDarkMode.setText("Karanlık Mod");
+        jCheckBoxMenuItemDarkMode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCheckBoxMenuItemDarkModeİtemStateChanged(evt);
+            }
+        });
+        jMenu3.add(jCheckBoxMenuItemDarkMode);
 
-        jMenuItem1.setText("Çıkış Yap");
-        jMenu3.add(jMenuItem1);
+        jMenuItemCikis.setText("Çıkış Yap");
+        jMenuItemCikis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCikisActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItemCikis);
 
         jMenuBar1.add(jMenu3);
 
@@ -113,36 +175,36 @@ public class FrmAdmin extends javax.swing.JFrame {
                         .addGap(103, 103, 103)
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldKullaniciAdiGetir, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonGetir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(136, 136, 136)
                         .addComponent(jLabel2)
                         .addGap(37, 37, 37)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldKullaniciAdi, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(84, 84, 84)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPasswordFieldSifre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(jLabel5)
                         .addGap(37, 37, 37)
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPasswordFieldSifreTekrar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
                         .addComponent(jLabel6)
                         .addGap(6, 6, 6)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jComboBoxRol, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(90, 90, 90)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEkle, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonGuncelle, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonSil, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -157,12 +219,12 @@ public class FrmAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldKullaniciAdiGetir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonGetir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldKullaniciAdi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPasswordFieldSifre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,17 +237,17 @@ public class FrmAdmin extends javax.swing.JFrame {
                         .addComponent(jLabel5))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPasswordFieldSifreTekrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel6))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonEkle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonGuncelle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonSil, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58))
         );
 
@@ -193,15 +255,126 @@ public class FrmAdmin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButtonMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMenuActionPerformed
         FrmMenu menu = new FrmMenu();
         menu.show();
         this.hide();
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButtonMenuActionPerformed
+////////////////////Kullanıcı Getirme//////////////////////////////
+    private void jButtonGetirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGetirActionPerformed
+        try {
+            String kullaniciadi, rol;
+            String sql = "Select * from Kullanici Where KullaniciAdi=?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, jTextFieldKullaniciAdiGetir.getText().trim());
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                kullaniciadi = rs.getString("KullaniciAdi");
+                jTextFieldKullaniciAdi.setText(kullaniciadi);
+                rol = rs.getString("Rol");
+                jComboBoxRol.setSelectedItem(rol);
+                jButtonEkle.setEnabled(false);
+                jButtonGuncelle.setEnabled(true);
+                jButtonSil.setEnabled(true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonGetirActionPerformed
+////////////////////Kullanıcı Getirme//////////////////////////////
 
-    /**
-     * @param args the command line arguments
-     */
+////////////////////Hakkımızda///////////////////////
+    private void jMenuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAboutMouseClicked
+        JOptionPane.showMessageDialog(null, "Mustafa Aktaş\n21380101030\nGazi Üniversitesi Tusaş-Kazan Meslek Yüksekokulu\nBilgisayar Programcılığı\nGörsel Programlama III\nKütüphane Takip Otomasyonu Projesi", "Hakkımızda", 1);
+    }//GEN-LAST:event_jMenuAboutMouseClicked
+////////////////////Hakkımızda///////////////////////
+////////////////////////Dark Mode//////////////////////////////
+    private void jCheckBoxMenuItemDarkModeİtemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItemDarkModeİtemStateChanged
+        if (jCheckBoxMenuItemDarkMode.isSelected()) {
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    FlatAnimatedLafChange.showSnapshot();
+                    FlatDarkLaf.setup();
+                    FlatLaf.updateUI();
+                    FlatAnimatedLafChange.hideSnapshotWithAnimation();
+                    jCheckBoxMenuItemDarkMode.setText("Açık Mod");
+                    jCheckBoxMenuItemDarkMode.setSelected(true);
+                }
+            });
+        } else {
+            EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    FlatAnimatedLafChange.showSnapshot();
+                    FlatIntelliJLaf.setup();
+                    FlatLaf.updateUI();
+                    FlatAnimatedLafChange.hideSnapshotWithAnimation();
+                    jCheckBoxMenuItemDarkMode.setText("Karanlık Mod");
+                    jCheckBoxMenuItemDarkMode.setSelected(false);
+                }
+            });
+        }
+    }//GEN-LAST:event_jCheckBoxMenuItemDarkModeİtemStateChanged
+////////////////////////Dark Mode//////////////////////////////
+    private void jButtonEkleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEkleActionPerformed
+        try {
+            boolean esit = jPasswordFieldSifre.getText().equals(jPasswordFieldSifreTekrar.getText());
+            if (esit) {
+                String sql = "Insert Into Kullanici(KullaniciAdi,Sifre,Rol,DarkMode) Values('" + jTextFieldKullaniciAdi.getText().trim() + "','" + MD5Sifreleme(jPasswordFieldSifre.getText().trim()) + "','"+jComboBoxRol.getSelectedItem()+"','True')";
+                System.out.println(MD5Sifreleme(jPasswordFieldSifre.getText().trim()));
+                pst.executeQuery(sql);
+            } else if (!esit) {
+                JOptionPane.showMessageDialog(null, "Girilen Şifreler Uyuşmuyor!", "Hata!", 2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonEkleActionPerformed
+////////////////////////////Menü Çıkış///////////////////////////
+    private void jMenuItemCikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCikisActionPerformed
+         int cevap = JOptionPane.showConfirmDialog(null, "Çıkmak İstediğinizden Emin Misiniz?", "Çıkış Yap!", JOptionPane.YES_NO_OPTION, 2);
+
+        if (cevap == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            // Uygulama kapatılmaz ve kullanıcı ana pencerede kalır.
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    }//GEN-LAST:event_jMenuItemCikisActionPerformed
+////////////////////////////Menü Çıkış///////////////////////////
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+         int cevap = JOptionPane.showConfirmDialog(null, "Çıkmak İstediğinizden Emin Misiniz?", "Çıkış Yap!", JOptionPane.YES_NO_OPTION, 2);
+
+        if (cevap == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+    }//GEN-LAST:event_formWindowClosing
+   
+    ///////////////////////////////// Şifre Kriptolama (MD5) ///////////////////////////////////////
+
+    public String MD5Sifreleme(String text) {
+
+        String md5Metin = null;
+        try {
+
+            md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(jPasswordFieldSifre.getText().getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+            md5Metin = sb.toString();
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(FrmOturum.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return md5Metin;
+    } ///////////////////////////////// Şifre Kriptolama (MD5) ///////////////////////////////////////
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -235,13 +408,13 @@ public class FrmAdmin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonEkle;
+    private javax.swing.JButton jButtonGetir;
+    private javax.swing.JButton jButtonGuncelle;
+    private javax.swing.JButton jButtonMenu;
+    private javax.swing.JButton jButtonSil;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItemDarkMode;
+    private javax.swing.JComboBox<String> jComboBoxRol;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -249,13 +422,13 @@ public class FrmAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JMenuItem jMenuItemCikis;
+    private javax.swing.JPasswordField jPasswordFieldSifre;
+    private javax.swing.JPasswordField jPasswordFieldSifreTekrar;
+    private javax.swing.JTextField jTextFieldKullaniciAdi;
+    private javax.swing.JTextField jTextFieldKullaniciAdiGetir;
     // End of variables declaration//GEN-END:variables
 }

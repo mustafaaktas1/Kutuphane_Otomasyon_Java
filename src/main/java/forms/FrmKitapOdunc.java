@@ -4,17 +4,44 @@
  */
 package forms;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DocumentFilter;
+import utils.DBConnection;
+import utils.SadeceSayiFilter;
+
 /**
  *
  * @author MustafaAktas
  */
 public class FrmKitapOdunc extends javax.swing.JFrame {
 
+    Connection conn = new DBConnection().CreateConnection();
+    ResultSet rs = null;
+    ResultSet rs2 = null;
+    CallableStatement proc = null;
+    PreparedStatement pst = null;
+    LocalDateTime localtime = LocalDateTime.now();
+
     /**
      * Creates new form FrmKitapOdunc
      */
     public FrmKitapOdunc() {
+
         initComponents();
+        DocumentFilter filter = new SadeceSayiFilter();
+        ((AbstractDocument) jTextFieldKitapAra.getDocument()).setDocumentFilter(filter);
+        ((AbstractDocument) jTextFieldGeriAlKitapAra.getDocument()).setDocumentFilter(filter);
+        ((AbstractDocument) jTextFieldTCNoAra.getDocument()).setDocumentFilter(filter);
     }
 
     /**
@@ -26,51 +53,52 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTextFieldKitapAra = new javax.swing.JTextField();
+        jButtonKitapGetir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldKitapAd = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldKitapYazar = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldSayfaSayisi = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldRafKonum = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jTextFieldTCNoAra = new javax.swing.JTextField();
+        jButtonUyeGetir = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        jTextFieldUyeAd = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        jTextFieldUyeSoyad = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButtonE = new javax.swing.JRadioButton();
+        jRadioButtonK = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jTextFieldTelefonNo = new javax.swing.JTextField();
+        jButtonOduncVer = new javax.swing.JButton();
+        jButtonMenu = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        jTextFieldGeriAlKitapAra = new javax.swing.JTextField();
+        jButtonGeriAlGetir = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
+        jTextFieldGeriAlKitapAd = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
+        jTextFieldGeriAlRafKonumu = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
+        jTextFieldGeriAlUyeAdSoyad = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField14 = new javax.swing.JTextField();
+        jTextFieldGeriAlTelNumarası = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jTextField15 = new javax.swing.JTextField();
+        jTextFieldGeriAlAlisTarihi = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jTextFieldGeriAlSonOkuma = new javax.swing.JTextField();
+        jButtonGeriAl = new javax.swing.JButton();
+        jButtonGeriAlMenu = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -84,41 +112,73 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Kütüphane Takip Otomasyonu");
 
         jLabel1.setText("Kitap Numarası");
 
-        jButton1.setText("Getir");
+        jButtonKitapGetir.setText("Getir");
+        jButtonKitapGetir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonKitapGetirActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Kitap Adı");
 
+        jTextFieldKitapAd.setEnabled(false);
+
         jLabel3.setText("Kitap Yazarı");
+
+        jTextFieldKitapYazar.setEnabled(false);
 
         jLabel4.setText("Sayfa Sayısı");
 
+        jTextFieldSayfaSayisi.setEnabled(false);
+
         jLabel5.setText("Raf Konumu");
+
+        jTextFieldRafKonum.setEnabled(false);
 
         jLabel6.setText("T.C. Kimlik Numarası");
 
-        jButton2.setText("Getir");
+        jButtonUyeGetir.setText("Getir");
+        jButtonUyeGetir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUyeGetirActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Üye Adı");
 
+        jTextFieldUyeAd.setEnabled(false);
+
         jLabel8.setText("Üye Soyadı");
+
+        jTextFieldUyeSoyad.setEnabled(false);
 
         jLabel9.setText("Üye Cinsiyeti");
 
-        jRadioButton1.setText("Erkek");
+        jRadioButtonE.setText("Erkek");
+        jRadioButtonE.setEnabled(false);
 
-        jRadioButton2.setText("Kadın");
+        jRadioButtonK.setText("Kadın");
+        jRadioButtonK.setEnabled(false);
 
         jLabel10.setText("Telefon Numarası");
 
-        jButton3.setText("Kitabı Ödünç Ver");
+        jTextFieldTelefonNo.setEnabled(false);
 
-        jButton4.setText("Ana Menü");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonOduncVer.setText("Kitabı Ödünç Ver");
+        jButtonOduncVer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonOduncVerActionPerformed(evt);
+            }
+        });
+
+        jButtonMenu.setText("Ana Menü");
+        jButtonMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMenuActionPerformed(evt);
             }
         });
 
@@ -127,20 +187,25 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(153, 153, 153)
+                .addComponent(jButtonOduncVer, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 251, Short.MAX_VALUE)
+                .addComponent(jButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(199, 199, 199))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldKitapAra, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(jButtonKitapGetir)
                         .addGap(100, 100, 100)
                         .addComponent(jLabel6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
@@ -151,10 +216,10 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
-                            .addComponent(jTextField2))
+                            .addComponent(jTextFieldKitapYazar)
+                            .addComponent(jTextFieldSayfaSayisi)
+                            .addComponent(jTextFieldRafKonum)
+                            .addComponent(jTextFieldKitapAd, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(84, 84, 84)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -165,24 +230,18 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldTCNoAra, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
+                        .addComponent(jButtonUyeGetir))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(jRadioButtonE)
                         .addGap(41, 41, 41)
-                        .addComponent(jRadioButton2))
+                        .addComponent(jRadioButtonK))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(106, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(153, 153, 153)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(199, 199, 199))
+                        .addComponent(jTextFieldTelefonNo, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextFieldUyeSoyad, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextFieldUyeAd, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(69, 69, 69))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,41 +249,41 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(jTextFieldKitapAra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonKitapGetir)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(jTextFieldTCNoAra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonUyeGetir))
                 .addGap(69, 69, 69)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldKitapAd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldUyeAd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldKitapYazar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldUyeSoyad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldSayfaSayisi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButton2))
+                        .addComponent(jRadioButtonE)
+                        .addComponent(jRadioButtonK))
                     .addComponent(jLabel4))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldRafKonum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTelefonNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonOduncVer, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
@@ -232,26 +291,48 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
 
         jLabel11.setText("Kitap Numarası");
 
-        jButton5.setText("Getir");
+        jButtonGeriAlGetir.setText("Getir");
+        jButtonGeriAlGetir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGeriAlGetirActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("Kitap Adı");
 
+        jTextFieldGeriAlKitapAd.setEnabled(false);
+
         jLabel13.setText("Raf Konumu");
+
+        jTextFieldGeriAlRafKonumu.setEnabled(false);
 
         jLabel14.setText("Kitabı Alan Üye");
 
+        jTextFieldGeriAlUyeAdSoyad.setEnabled(false);
+
         jLabel15.setText("Telefon Numarası");
+
+        jTextFieldGeriAlTelNumarası.setEnabled(false);
 
         jLabel16.setText("Alış Tarihi");
 
+        jTextFieldGeriAlAlisTarihi.setEnabled(false);
+
         jLabel17.setText("Son Okuma Tarihi");
 
-        jButton6.setText("Kitabı Geri Al");
+        jTextFieldGeriAlSonOkuma.setEnabled(false);
 
-        jButton7.setText("Ana Menü");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jButtonGeriAl.setText("Kitabı Geri Al");
+        jButtonGeriAl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jButtonGeriAlActionPerformed(evt);
+            }
+        });
+
+        jButtonGeriAlMenu.setText("Ana Menü");
+        jButtonGeriAlMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGeriAlMenuActionPerformed(evt);
             }
         });
 
@@ -271,9 +352,9 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField11)
-                                    .addComponent(jTextField13)
-                                    .addComponent(jTextField15, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                                    .addComponent(jTextFieldGeriAlKitapAd)
+                                    .addComponent(jTextFieldGeriAlUyeAdSoyad)
+                                    .addComponent(jTextFieldGeriAlAlisTarihi, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -283,19 +364,19 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
                                 .addGap(0, 120, Short.MAX_VALUE)
                                 .addComponent(jLabel11)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldGeriAlKitapAra, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton5)))
+                                .addComponent(jButtonGeriAlGetir)))
                         .addGap(40, 40, 40)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField12)
-                            .addComponent(jTextField14)
-                            .addComponent(jTextField16, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                            .addComponent(jTextFieldGeriAlRafKonumu)
+                            .addComponent(jTextFieldGeriAlTelNumarası)
+                            .addComponent(jTextFieldGeriAlSonOkuma, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
                         .addGap(74, 74, 74))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonGeriAl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonGeriAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(141, 141, 141))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -304,30 +385,30 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
                 .addGap(42, 42, 42)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jTextFieldGeriAlKitapAra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonGeriAlGetir))
                 .addGap(58, 58, 58)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldGeriAlKitapAd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldGeriAlRafKonumu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(74, 74, 74)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldGeriAlUyeAdSoyad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
                     .addComponent(jLabel15)
-                    .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldGeriAlTelNumarası, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldGeriAlAlisTarihi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
-                    .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldGeriAlSonOkuma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(72, 72, 72)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonGeriAl, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonGeriAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -387,22 +468,203 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMenuActionPerformed
         FrmMenu menu = new FrmMenu();
         menu.show();
         this.hide();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonMenuActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void jButtonGeriAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGeriAlMenuActionPerformed
         FrmMenu menu = new FrmMenu();
         menu.show();
         this.hide();
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_jButtonGeriAlMenuActionPerformed
 
+    /////////////Kitap Getirme////////////////////////////////////////
+    private void jButtonKitapGetirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKitapGetirActionPerformed
+//ilk sorgu kitap varmı kontrol eder ikinci sorgu kitap alınmış mı kontrol eder
+        try {
+            String sql = "select KitapNo,KitapAdi,KitapYazar,KitapSayfa,RafKonumu from Kitap where KitapNo=" + jTextFieldKitapAra.getText().trim() + "";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            String sql2 = "select * from Kayit where KitapNo=" + jTextFieldKitapAra.getText().trim() + "";
+            pst = conn.prepareStatement(sql2);
+            rs2 = pst.executeQuery();
+            if (rs.next()) {
+                if (!rs2.next()) {
+                    jTextFieldKitapAd.setText(rs.getString("KitapAdi"));
+                    jTextFieldKitapYazar.setText(rs.getString("KitapYazar"));
+                    jTextFieldSayfaSayisi.setText(rs.getString("KitapSayfa"));
+                    jTextFieldRafKonum.setText(rs.getString("RafKonumu"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aradığınız Kitap Başka Bir Üyenin Üzerinde!", "Hata!!!", 2);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Aradığınız Kitap Bulunamadı!", "Hata!!!", 2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmKitapOdunc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonKitapGetirActionPerformed
+/////////////Kitap Getirme////////////////////////////////////////
+    /////////////Üye Getirme////////////////////////////////////////
+    private void jButtonUyeGetirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUyeGetirActionPerformed
+        //ilk sorgu Üye varmı kontrol eder ikinci sorgu üyenin üzerinde kitap varmı kontrol eder
+        try {
+            String sql = "select Ad,Soyad,Cinsiyet,TelefonNo from Uye where TCNo=" + jTextFieldTCNoAra.getText().trim() + "";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            String sql2 = "select * from Kayit where KitabiAlanTc=" + jTextFieldTCNoAra.getText().trim() + "";
+            pst = conn.prepareStatement(sql2);
+            rs2 = pst.executeQuery();
+            if (rs.next()) {
+
+                if (!rs2.next()) {
+                    jTextFieldUyeAd.setText(rs.getString("Ad"));
+                    jTextFieldUyeSoyad.setText(rs.getString("Soyad"));
+                    String cinsiyet = rs.getString("Cinsiyet");
+                    if (cinsiyet.equals("E")) {
+                        jRadioButtonE.setSelected(true);
+                    } else if (cinsiyet.equals("K")) {
+                        jRadioButtonK.setSelected(true);
+                    }
+                    jTextFieldTelefonNo.setText(rs.getString("TelefonNo"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Bu Üyenin Üzerinde Kitap Bulunmaktadır!", "Hata!!!", 2);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Üye Bulunamadı!", "Hata!!!", 2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmKitapOdunc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonUyeGetirActionPerformed
+    /////////////Üye Getirme////////////////////////////////////////
+    /////////////Kitap Geri Alma Getir////////////////////////////////////////
+    private void jButtonGeriAlGetirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGeriAlGetirActionPerformed
+        //ilk sorgu kitap varmı kontrol eder ikinci sorgu kitap alınmış mı kontrol eder
+        try {
+            String sql = "select KitapNo,KitapAdi,KitapYazar,KitapSayfa,RafKonumu from Kitap where KitapNo=" + jTextFieldGeriAlKitapAra.getText().trim() + "";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            String sql2 = "select KitabiAlanAd,KitabiAlanSoyad,KitabiAlanTelefonNo,KitapAd,RafKonum,AlisTarihi,SonOkumaTarihi from Kayit where KitapNo=" + jTextFieldGeriAlKitapAra.getText().trim() + "";
+            pst = conn.prepareStatement(sql2);
+            rs2 = pst.executeQuery();
+            if (rs.next()) {
+                if (rs2.next()) {
+                    jTextFieldGeriAlKitapAd.setText(rs2.getString("KitapAd"));
+                    jTextFieldGeriAlUyeAdSoyad.setText(rs2.getString("KitabiAlanAd") + " " + rs2.getString("KitabiAlanSoyad"));
+                    jTextFieldGeriAlRafKonumu.setText(rs2.getString("RafKonum"));
+                    jTextFieldGeriAlTelNumarası.setText(rs2.getString("KitabiAlanTelefonNo"));
+                    jTextFieldGeriAlAlisTarihi.setText(rs2.getString("AlisTarihi"));
+                    jTextFieldGeriAlSonOkuma.setText(rs2.getString("SonOkumaTarihi"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Aradığınız Kitap Bir Üyenin Üzerinde Değil!", "Hata!!!", 2);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Aradığınız Kitap Bulunamadı!", "Hata!!!", 2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmKitapOdunc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonGeriAlGetirActionPerformed
+/////////////Kitap Geri Alma Getir////////////////////////////////////////
+    /////////////Kitap Ödünç Verme////////////////////////////////////////
+    private void jButtonOduncVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOduncVerActionPerformed
+        LocalDateTime gunekleme = localtime.plusDays(15);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+        String simdikizaman = localtime.format(formatter);
+        String sonokuma = gunekleme.format(formatter);
+
+        String tcno = jTextFieldTCNoAra.getText().trim();
+        String ad = jTextFieldUyeAd.getText().trim();
+        String soyad = jTextFieldUyeSoyad.getText().trim();
+        String kitapno = jTextFieldKitapAra.getText().trim();
+        String telefonno = jTextFieldTelefonNo.getText().trim();
+        String kitapad = jTextFieldKitapAd.getText().trim();
+        String raf = jTextFieldRafKonum.getText().trim();
+        String alis = simdikizaman;
+        String getirme = sonokuma;
+
+        try {
+            int kaydet = JOptionPane.showConfirmDialog(null, "Üye TC No: " + tcno + "\nÜye Adı Soyadı: " + ad + " " + soyad + "\nKitap No: " + kitapno + "\nKitap Adı: " + kitapad + "\nKitabı Ödünç Vermek İstiyormusunuz?", "Kitap Ödünç Ver", JOptionPane.YES_NO_OPTION,
+                    3);
+            if (kaydet == JOptionPane.YES_OPTION) {
+                String sql = "INSERT INTO Kayit (KitabiAlanTc,KitabiAlanAd,KitabiAlanSoyad,KitabiAlanTelefonNo,KitapNo,KitapAd,RafKonum,AlisTarihi,SonOkumaTarihi) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, tcno);
+                pst.setString(2, ad);
+                pst.setString(3, soyad);
+                pst.setString(4, telefonno);
+                pst.setString(5, kitapno);
+                pst.setString(6, kitapad);
+                pst.setString(7, raf);
+                pst.setString(8, simdikizaman);
+                pst.setString(9, sonokuma);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Kitap Ödünç Verildi\nÖdünç Verilme Tarihi: " + simdikizaman + "\nSon Okuma Tarihi (15 Gün):" + sonokuma + "", "Kitap Ödünç Ver", JOptionPane.INFORMATION_MESSAGE);
+                clearAllTextFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmKitapOdunc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonOduncVerActionPerformed
+/////////////Kitap Ödünç Verme////////////////////////////////////////
+    ///////////////////////Kitap Geri Alma/////////////////////////
+    private void jButtonGeriAlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGeriAlActionPerformed
+
+        String kitapalan = jTextFieldGeriAlUyeAdSoyad.getText().trim();
+        String kitapno = jTextFieldGeriAlKitapAra.getText().trim();
+        String kitapad = jTextFieldGeriAlKitapAd.getText().trim();
+
+        try {
+            int kaydet = JOptionPane.showConfirmDialog(null, "Kitabı Alan Üye: " + kitapalan + "\nKitap No: " + kitapno + "\nKitap Adı: " + kitapad + "\nKitabı Geri Almak İstiyormusunuz?", "Kitap Geri Al", JOptionPane.YES_NO_OPTION,
+                    3);
+            if (kaydet == JOptionPane.YES_OPTION) {
+                String sql = "Delete from Kayit where KitapNo=?";
+                pst = conn.prepareStatement(sql);
+                pst.setString(1, kitapno);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Kitap Geri Alındı", "Kitap Geri Al", JOptionPane.INFORMATION_MESSAGE);
+                clearAllTextFields();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmKitapOdunc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonGeriAlActionPerformed
+///////////////////////Kitap Geri Alma/////////////////////////
+
+    ///////////////Text Field Temizleme/////////////////////
+    public void clearAllTextFields() {
+        jTextFieldGeriAlAlisTarihi.setText("");
+        jTextFieldGeriAlKitapAd.setText("");
+        jTextFieldGeriAlKitapAra.setText("");
+        jTextFieldGeriAlRafKonumu.setText("");
+        jTextFieldGeriAlSonOkuma.setText("");
+        jTextFieldGeriAlTelNumarası.setText("");
+        jTextFieldGeriAlUyeAdSoyad.setText("");
+        jTextFieldKitapAd.setText("");
+        jTextFieldKitapAra.setText("");
+        jTextFieldKitapYazar.setText("");
+        jTextFieldRafKonum.setText("");
+        jTextFieldSayfaSayisi.setText("");
+        jTextFieldTCNoAra.setText("");
+        jTextFieldTelefonNo.setText("");
+        jTextFieldUyeAd.setText("");
+        jTextFieldUyeSoyad.setText("");
+        jRadioButtonE.setSelected(false);
+        jRadioButtonK.setSelected(false);
+    }
+
+    ///////////////Text Field Temizleme/////////////////////
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -435,13 +697,14 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButtonGeriAl;
+    private javax.swing.JButton jButtonGeriAlGetir;
+    private javax.swing.JButton jButtonGeriAlMenu;
+    private javax.swing.JButton jButtonKitapGetir;
+    private javax.swing.JButton jButtonMenu;
+    private javax.swing.JButton jButtonOduncVer;
+    private javax.swing.JButton jButtonUyeGetir;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -472,24 +735,24 @@ public class FrmKitapOdunc extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButtonE;
+    private javax.swing.JRadioButton jRadioButtonK;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldGeriAlAlisTarihi;
+    private javax.swing.JTextField jTextFieldGeriAlKitapAd;
+    private javax.swing.JTextField jTextFieldGeriAlKitapAra;
+    private javax.swing.JTextField jTextFieldGeriAlRafKonumu;
+    private javax.swing.JTextField jTextFieldGeriAlSonOkuma;
+    private javax.swing.JTextField jTextFieldGeriAlTelNumarası;
+    private javax.swing.JTextField jTextFieldGeriAlUyeAdSoyad;
+    private javax.swing.JTextField jTextFieldKitapAd;
+    private javax.swing.JTextField jTextFieldKitapAra;
+    private javax.swing.JTextField jTextFieldKitapYazar;
+    private javax.swing.JTextField jTextFieldRafKonum;
+    private javax.swing.JTextField jTextFieldSayfaSayisi;
+    private javax.swing.JTextField jTextFieldTCNoAra;
+    private javax.swing.JTextField jTextFieldTelefonNo;
+    private javax.swing.JTextField jTextFieldUyeAd;
+    private javax.swing.JTextField jTextFieldUyeSoyad;
     // End of variables declaration//GEN-END:variables
 }

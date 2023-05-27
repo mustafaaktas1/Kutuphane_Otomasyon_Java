@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package forms;
+
 import javax.swing.*;
 import utils.DBConnection;
 import java.security.MessageDigest;
@@ -118,6 +119,11 @@ public class FrmOturum extends javax.swing.JFrame {
                 jMenuAboutMouseClicked(evt);
             }
         });
+        jMenuAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAboutActionPerformed(evt);
+            }
+        });
         jMenuBar.add(jMenuAbout);
 
         jMenu1.setText("Ayarlar");
@@ -223,12 +229,13 @@ public class FrmOturum extends javax.swing.JFrame {
                     sb.append(String.format("%02x", b));
                 }
                 md5Metin = sb.toString();
+
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(FrmOturum.class.getName()).log(Level.SEVERE, null, ex);
             }
             ///////////////////////////////// Şifre Kriptolama (MD5) ///////////////////////////////////////
 
-            String sql = "Select * from Admin Where KullaniciAdi=? and Sifre=?";
+            String sql = "Select * from Kullanici Where KullaniciAdi=? and Sifre=?";
             pst = conn.prepareStatement(sql);
             pst.setString(1, jTextFieldKullaniciAdi.getText().trim());
             pst.setString(2, md5Metin);
@@ -236,13 +243,13 @@ public class FrmOturum extends javax.swing.JFrame {
             if (rs.next()) {
 
                 String darkmode = rs.getString("DarkMode");
-                System.out.println(darkmode);
+               
                 if (darkmode.equals("1")) {
                     jCheckBoxMenuItemDarkMode.setSelected(true);
-                    System.out.println("true döndü");
+                   
                 } else if (darkmode.equals("0")) {
                     jCheckBoxMenuItemDarkMode.setSelected(false);
-                    System.out.println("false döndü");
+                    
                 }
 
                 String rol = rs.getString("Rol");
@@ -348,6 +355,10 @@ public class FrmOturum extends javax.swing.JFrame {
             setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAboutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuAboutActionPerformed
 
     /**
      *
